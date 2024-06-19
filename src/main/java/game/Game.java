@@ -4,15 +4,21 @@ import java.util.Scanner;
 
 import static constant.Constants.*;
 
-public class Controller {
+public class Game {
     private Board board;
+    private int score;
+
+    public Game() {
+        this.score = 0;
+    }
 
     public void run() {
         createBoard();
         while(!board.isGameOver()) {
-            move();
+            score = score + move();
             board.addRandomValue();
             board.print();
+            System.out.println("Score: " + score);
         }
     }
 
@@ -42,9 +48,10 @@ public class Controller {
         return size;
     }
 
-    private void move() {
+    private int move() {
         Scanner scan = new Scanner(System.in);
         String input = null;
+        int score = 0;
         while(input == null) {
             System.out.print("Input move: ");
             input = scan.next();
@@ -61,11 +68,14 @@ public class Controller {
                     case RIGHT_CHARACTER -> System.out.println("Right");
                 }
 
-                if(!board.move(input)) {
+                if(!board.isValidMove(input)) {
                     System.out.println("Nothing moved. Try again.");
                     input = null;
                 }
+                else
+                    score = board.move(input);
             }
         }
+        return score;
     }
 }

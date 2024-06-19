@@ -65,38 +65,26 @@ public class Board {
         return true;
     }
 
-    public boolean move(String direction) {
+    public int move(String direction) {
         switch (direction) {
             case UP_CHARACTER -> {
-                if (!isValidMove(direction))
-                    return false;
-                moveUp();
-                return true;
+                return moveUp();
             }
             case DOWN_CHARACTER -> {
-                if (!isValidMove(direction))
-                    return false;
-                moveDown();
-                return true;
+                return moveDown();
             }
             case LEFT_CHARACTER -> {
-                if (!isValidMove(direction))
-                    return false;
-                moveLeft();
-                return true;
+                return moveLeft();
             }
             case RIGHT_CHARACTER -> {
-                if (!isValidMove(direction))
-                    return false;
-                moveRight();
-                return true;
+                return moveRight();
             }
         }
-        return false;
+        return 0;
     }
 
 
-    private boolean isValidMove(String direction) {
+    public boolean isValidMove(String direction) {
         for(int r = 0; r < num_rows; r++) {
             for(int c = 0; c < num_cols; c++) {
                 if(!board[r][c].isEmpty() && ((direction.equals(UP_CHARACTER) && canCellMoveUp(new RowColumnPair(r, c)))
@@ -161,17 +149,20 @@ public class Board {
         return false;
     }
 
-    private void moveUp() {
+    private int moveUp() {
+        int score = 0;
         shiftCellsUp();
         for(int c = 0; c < num_cols; c++) {
             for(int r = 0; r < num_rows - 1; r++) {
                 if(!board[r][c].isEmpty() && board[r][c].getValue() == board[r + 1][c].getValue()) {
                     board[r][c].doubleValue();
                     board[r + 1][c].emptyCell();
+                    score += board[r][c].getValue();
                 }
             }
         }
         shiftCellsUp();
+        return score;
     }
 
     private void shiftCellsUp() {
@@ -190,17 +181,20 @@ public class Board {
         }
     }
 
-    private void moveDown() {
+    private int moveDown() {
+        int score = 0;
         shiftCellsDown();
         for(int c = 0; c < num_cols; c++) {
             for(int r = num_rows - 1; r > 0; r--) {
                 if(!board[r][c].isEmpty() && board[r][c].getValue() == board[r - 1][c].getValue()) {
                     board[r][c].doubleValue();
                     board[r - 1][c].emptyCell();
+                    score += board[r][c].getValue();
                 }
             }
         }
         shiftCellsDown();
+        return score;
     }
 
     private void shiftCellsDown() {
@@ -219,17 +213,20 @@ public class Board {
         }
     }
 
-    private void moveLeft() {
+    private int moveLeft() {
+        int score = 0;
         shiftCellsLeft();
         for(int r = 0; r < num_rows; r++) {
             for(int c = 0; c < num_cols - 1; c++) {
                 if(!board[r][c].isEmpty() && board[r][c].getValue() == board[r][c + 1].getValue()) {
                     board[r][c].doubleValue();
                     board[r][c + 1].emptyCell();
+                    score += board[r][c].getValue();
                 }
             }
         }
         shiftCellsLeft();
+        return score;
     }
 
     private void shiftCellsLeft() {
@@ -248,17 +245,20 @@ public class Board {
         }
     }
 
-    private void moveRight() {
+    private int moveRight() {
+        int score = 0;
         shiftCellsRight();
         for(int r = 0; r < num_rows; r++) {
             for(int c = num_cols - 1; c > 0; c--) {
                 if(!board[r][c].isEmpty() && board[r][c].getValue() == board[r][c - 1].getValue()) {
                     board[r][c].doubleValue();
                     board[r][c - 1].emptyCell();
+                    score += board[r][c].getValue();
                 }
             }
         }
         shiftCellsRight();
+        return score;
     }
 
     private void shiftCellsRight() {
