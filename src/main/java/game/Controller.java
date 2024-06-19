@@ -2,22 +2,70 @@ package game;
 
 import java.util.Scanner;
 
+import static constant.Constants.*;
+
 public class Controller {
     private Board board;
 
     public void run() {
         createBoard();
+        while(!board.isGameOver()) {
+            move();
+            board.addRandomValue();
+            board.print();
+        }
     }
 
     private void createBoard(){
-        Scanner scan = new Scanner(System.in);
-        System.out.print("Enter number of rows: ");
-        int num_rows = scan.nextInt();
-
-        System.out.print("Enter number of columns: ");
-        int num_cols = scan.nextInt();
+        int num_rows = askForSize("Enter number of rows: ");
+        int num_cols = askForSize("Enter number of columns: ");
 
         board = new Board(num_rows, num_cols);
-        board.printBoard();
+        board.addRandomValue();
+        board.addRandomValue();
+        board.print();
+    }
+
+    private int askForSize(String command) {
+        Scanner scan = new Scanner(System.in);
+        int size = -1;
+
+        while(size == -1) {
+            System.out.print(command);
+            size = scan.nextInt();
+
+            if(size < MINIMUM_SIZE || size > MAXIMUM_SIZE) {
+                System.out.println("Size must be an between 2 and 10 inclusive. Try again.");
+                size = -1;
+            }
+        }
+        return size;
+    }
+
+    private void move() {
+        Scanner scan = new Scanner(System.in);
+        String input = null;
+        while(input == null) {
+            System.out.print("Input move: ");
+            input = scan.next();
+
+            if(!INPUT_KEYS.contains(input)) {
+                System.out.println("Invalid character for move. Try again.");
+                input = null;
+            }
+            else {
+                switch (input) {
+                    case UP_CHARACTER -> System.out.println("Up");
+                    case DOWN_CHARACTER -> System.out.println("Down");
+                    case LEFT_CHARACTER -> System.out.println("Left");
+                    case RIGHT_CHARACTER -> System.out.println("Right");
+                }
+
+                if(!board.move(input)) {
+                    System.out.println("Nothing moved. Try again.");
+                    input = null;
+                }
+            }
+        }
     }
 }
