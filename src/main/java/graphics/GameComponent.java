@@ -44,7 +44,7 @@ public class GameComponent extends JPanel implements KeyListener {
                 int x_coordinate = (MARGIN_SIZE + (num_cols * (num_cols) - 2)) + (c * (cell_size + SPACE_BETWEEN_CELLS));
                 int y_coordinate = (MARGIN_SIZE + (num_rows * (num_rows) - 2)) + (r * (cell_size + SPACE_BETWEEN_CELLS));
                 g.setColor(Color.GRAY);
-                g.fillRect(x_coordinate, y_coordinate, cell_size, cell_size);
+                g.fillRoundRect(x_coordinate, y_coordinate, cell_size, cell_size, 15, 15);
                 g.setColor(Color.BLACK);
                 int value = board.getCellValue(r, c);
                 if(value != EMPTY_CELL_VALUE)
@@ -105,6 +105,7 @@ public class GameComponent extends JPanel implements KeyListener {
             board.addRandomValue();
             board.addRandomValue();
             is_game_over = false;
+            score = 0;
             repaint();
         }
     }
