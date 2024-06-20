@@ -277,10 +277,10 @@ public class Board {
         }
     }
 
-    public Cell getCell(int row, int col) {
+    public int getCellValue(int row, int col) {
         if(row < 0 || row >= num_rows || col < 0 || col >= num_cols)
-            return null;
-        return board[row][col];
+            return -1;
+        return board[row][col].getValue();
     }
 
     public void print() {

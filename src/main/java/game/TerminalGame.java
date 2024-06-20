@@ -4,11 +4,11 @@ import java.util.Scanner;
 
 import static constant.Constants.*;
 
-public class Game {
+public class TerminalGame {
     private Board board;
     private int score;
 
-    public Game() {
+    public TerminalGame() {
         this.score = 0;
     }
 

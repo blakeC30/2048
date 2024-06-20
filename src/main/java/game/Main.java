@@ -1,9 +1,9 @@
 package game;
 
-import graphics.GameGUI;
+import graphics.GameWindow;
 
 public class Main {
     public static void main(String[] args) {
-        GameGUI gui = new GameGUI();
+        GameWindow game = new GameWindow();
     }
 }

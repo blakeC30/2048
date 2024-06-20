@@ -4,21 +4,16 @@ import util.TextFieldType;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 import static constant.Constants.*;
 
-public class GameGUI extends JFrame implements KeyListener {
-    private boolean game_started;
-    private JPanel start_page;
+public class GameWindow extends JFrame{
+    private final JPanel start_page;
     private JTextField row_text_field;
     private JTextField col_text_field;
-    private JLabel error_label;
+    private final JLabel error_label;
 
-    public GameGUI() {
+    public GameWindow() {
         super(GAME_TITLE);
         JLabel title = new JLabel("2048") {
             {
@@ -52,7 +47,6 @@ public class GameGUI extends JFrame implements KeyListener {
         start_page = new JPanel();
         start_page.setLayout(new BoxLayout(start_page, BoxLayout.Y_AXIS));
         start_page.setBackground(Color.BLACK);
-        start_page.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         start_page.add(new BlankLabel(125));
         start_page.add(title);
@@ -80,11 +74,16 @@ public class GameGUI extends JFrame implements KeyListener {
                 int num_rows = Integer.parseInt(row_text_field.getText());
                 int num_cols = Integer.parseInt(col_text_field.getText());
 
-                if (num_rows < 2 || num_rows > 10 || num_cols < 2 || num_cols > 10) {
-                    error_label.setText("Values must be between 2 and 10 inclusive");
+                if (num_rows < MINIMUM_SIZE || num_rows > MAXIMUM_SIZE || num_cols < MINIMUM_SIZE || num_cols > MAXIMUM_SIZE) {
+                    error_label.setText("Values must be between " + MINIMUM_SIZE + " and " + MAXIMUM_SIZE + " inclusive");
                 }
                 else {
-                    game_started = true;
+                    GameComponent game = new GameComponent(num_rows, num_cols);
+                    game.setVisible(true);
+                    this.add(game);
+                    this.addKeyListener(game);
+                    this.requestFocus();
+                    start_page.setVisible(false);
                 }
             } catch (NumberFormatException e) {
                 error_label.setText("Fields must contain integers");
@@ -128,20 +127,5 @@ public class GameGUI extends JFrame implements KeyListener {
         main.add(right);
 
         return main;
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        if(game_started){
-
-        }
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
     }
 }
