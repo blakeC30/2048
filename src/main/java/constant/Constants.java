@@ -14,4 +14,6 @@ public class Constants {
     public final static String LEFT_CHARACTER = "j";
     public final static String RIGHT_CHARACTER = "k";
     public final static Set<String> INPUT_KEYS = Set.of(UP_CHARACTER, DOWN_CHARACTER, LEFT_CHARACTER, RIGHT_CHARACTER);
+    public final static int WINDOW_SIZE = 800;
+    public final static String GAME_TITLE = "2048";
 }

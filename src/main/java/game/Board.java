@@ -277,6 +277,12 @@ public class Board {
         }
     }
 
+    public Cell getCell(int row, int col) {
+        if(row < 0 || row >= num_rows || col < 0 || col >= num_cols)
+            return null;
+        return board[row][col];
+    }
+
     public void print() {
         int character_width_of_board = (num_cols * 6) + 1;
         System.out.println("-".repeat(character_width_of_board));
