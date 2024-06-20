@@ -28,13 +28,11 @@ public class GameComponent extends JPanel implements KeyListener {
 
     @Override
     protected void paintComponent(Graphics g) {
-        System.out.println("IN PAINT COMPONENT");
         g.setColor(Color.BLACK);
         g.fillRect(0,0,WINDOW_SIZE,WINDOW_SIZE);
 
         g.setColor(Color.YELLOW);
         g.setFont(new Font("Arial", Font.BOLD, 40));
-//        score = 100000;
         g.drawString(String.valueOf(score), 390 - ((String.valueOf(score).length() - 1) * 10), 75);
 
         int larger_dimension = Math.max(num_rows, num_cols);
