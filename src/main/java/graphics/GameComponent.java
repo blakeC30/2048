@@ -1,13 +1,12 @@
 package graphics;
 
-import game.Board;
+import static constant.Constants.*;
 
-import javax.swing.*;
+import game.Board;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
-import static constant.Constants.*;
+import javax.swing.*;
 
 public class GameComponent extends JPanel implements KeyListener {
     private final int num_rows;
@@ -31,7 +30,7 @@ public class GameComponent extends JPanel implements KeyListener {
     @Override
     protected void paintComponent(Graphics g) {
         g.setColor(Color.BLACK);
-        g.fillRect(0,0,WINDOW_SIZE,WINDOW_SIZE);
+        g.fillRect(0, 0, WINDOW_SIZE, WINDOW_SIZE);
 
         g.setColor(Color.YELLOW);
         g.setFont(new Font("Arial", Font.BOLD, 40));
@@ -39,7 +38,7 @@ public class GameComponent extends JPanel implements KeyListener {
 
         board_component.paintBoard(g);
 
-        if(is_game_over) {
+        if (is_game_over) {
             g.setColor(Color.RED);
             g.setFont(new Font("Arial", Font.BOLD, 60));
             g.drawString("GAME OVER", 210, 750);
@@ -47,13 +46,11 @@ public class GameComponent extends JPanel implements KeyListener {
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {
-
-    }
+    public void keyTyped(KeyEvent e) {}
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if(!is_game_over) {
+        if (!is_game_over) {
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_UP -> {
                     if (board.isValidMove(UP_CHARACTER)) {
@@ -85,8 +82,7 @@ public class GameComponent extends JPanel implements KeyListener {
                 }
             }
             repaint();
-        }
-        else if(e.getKeyCode() == KeyEvent.VK_N) {
+        } else if (e.getKeyCode() == KeyEvent.VK_N) {
             board = new Board(num_rows, num_cols);
             board.addRandomValue();
             board.addRandomValue();
@@ -98,7 +94,5 @@ public class GameComponent extends JPanel implements KeyListener {
     }
 
     @Override
-    public void keyReleased(KeyEvent e) {
-
-    }
+    public void keyReleased(KeyEvent e) {}
 }

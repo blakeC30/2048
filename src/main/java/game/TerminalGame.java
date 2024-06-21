@@ -1,8 +1,8 @@
 package game;
 
-import java.util.Scanner;
-
 import static constant.Constants.*;
+
+import java.util.Scanner;
 
 public class TerminalGame {
     private Board board;
@@ -14,7 +14,7 @@ public class TerminalGame {
 
     public void run() {
         createBoard();
-        while(!board.isGameOver()) {
+        while (!board.isGameOver()) {
             score = score + move();
             board.addRandomValue();
             board.print();
@@ -22,7 +22,7 @@ public class TerminalGame {
         }
     }
 
-    private void createBoard(){
+    private void createBoard() {
         int num_rows = askForSize("Enter number of rows: ");
         int num_cols = askForSize("Enter number of columns: ");
 
@@ -36,11 +36,11 @@ public class TerminalGame {
         Scanner scan = new Scanner(System.in);
         int size = -1;
 
-        while(size == -1) {
+        while (size == -1) {
             System.out.print(command);
             size = scan.nextInt();
 
-            if(size < MINIMUM_SIZE || size > MAXIMUM_SIZE) {
+            if (size < MINIMUM_SIZE || size > MAXIMUM_SIZE) {
                 System.out.println("Size must be an between 2 and 10 inclusive. Try again.");
                 size = -1;
             }
@@ -52,15 +52,14 @@ public class TerminalGame {
         Scanner scan = new Scanner(System.in);
         String input = null;
         int score = 0;
-        while(input == null) {
+        while (input == null) {
             System.out.print("Input move: ");
             input = scan.next();
 
-            if(!INPUT_KEYS.contains(input)) {
+            if (!INPUT_KEYS.contains(input)) {
                 System.out.println("Invalid character for move. Try again.");
                 input = null;
-            }
-            else {
+            } else {
                 switch (input) {
                     case UP_CHARACTER -> System.out.println("Up");
                     case DOWN_CHARACTER -> System.out.println("Down");
@@ -68,12 +67,10 @@ public class TerminalGame {
                     case RIGHT_CHARACTER -> System.out.println("Right");
                 }
 
-                if(!board.isValidMove(input)) {
+                if (!board.isValidMove(input)) {
                     System.out.println("Nothing moved. Try again.");
                     input = null;
-                }
-                else
-                    score = board.move(input);
+                } else score = board.move(input);
             }
         }
         return score;
