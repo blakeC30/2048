@@ -42,4 +42,6 @@ public class Constants {
                     Map.entry(32768, new Color(123, 172, 212)),
                     Map.entry(65536, new Color(99, 145, 212)),
                     Map.entry(131072, new Color(43, 98, 165)));
+    public static final int AI_GAME_SIZE = 4;
+    public static final Set<String> AI_MOVES = Set.of("UP", "DOWN", "LEFT", "RIGHT");
 }

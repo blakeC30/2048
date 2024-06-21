@@ -1,11 +1,10 @@
 package game;
 
-import util.RowColumnPair;
+import static constant.Constants.*;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static constant.Constants.*;
+import util.RowColumnPair;
 
 public class Board {
     private final int num_rows;
@@ -20,8 +19,8 @@ public class Board {
 
     private void populateBoard() {
         board = new Cell[num_rows][num_cols];
-        for(int r = 0; r < num_rows; r++) {
-            for(int c = 0; c < num_cols; c++) {
+        for (int r = 0; r < num_rows; r++) {
+            for (int c = 0; c < num_cols; c++) {
                 board[r][c] = new Cell(EMPTY_CELL_VALUE);
             }
         }
@@ -36,9 +35,9 @@ public class Board {
 
     private List<RowColumnPair> getEmptyCells() {
         List<RowColumnPair> emptyCells = new ArrayList<>();
-        for(int r = 0; r < num_rows; r++) {
-            for(int c = 0; c < num_cols; c++) {
-                if(board[r][c].getValue() == EMPTY_CELL_VALUE) {
+        for (int r = 0; r < num_rows; r++) {
+            for (int c = 0; c < num_cols; c++) {
+                if (board[r][c].getValue() == EMPTY_CELL_VALUE) {
                     emptyCells.add(new RowColumnPair(r, c));
                 }
             }
@@ -47,16 +46,15 @@ public class Board {
     }
 
     public boolean isGameOver() {
-        if(!getEmptyCells().isEmpty())
-            return false;
+        if (!getEmptyCells().isEmpty()) return false;
 
-        for(int r = 0; r < num_rows; r++) {
-            for(int c = 0; c < num_cols; c++) {
+        for (int r = 0; r < num_rows; r++) {
+            for (int c = 0; c < num_cols; c++) {
                 int val = board[r][c].getValue();
-                if((r != 0 && board[r - 1][c].getValue() == val)
-                    || (r != num_rows - 1 && board[r + 1][c].getValue() == val)
-                    || (c != 0 && board[r][c - 1].getValue() == val)
-                    || (c != num_cols - 1 && board[r][c + 1].getValue() == val)) {
+                if ((r != 0 && board[r - 1][c].getValue() == val)
+                        || (r != num_rows - 1 && board[r + 1][c].getValue() == val)
+                        || (c != 0 && board[r][c - 1].getValue() == val)
+                        || (c != num_cols - 1 && board[r][c + 1].getValue() == val)) {
                     return false;
                 }
             }
@@ -83,15 +81,18 @@ public class Board {
         return 0;
     }
 
-
     public boolean isValidMove(String direction) {
-        for(int r = 0; r < num_rows; r++) {
-            for(int c = 0; c < num_cols; c++) {
-                if(!board[r][c].isEmpty() && ((direction.equals(UP_CHARACTER) && canCellMoveUp(new RowColumnPair(r, c)))
-                    || (direction.equals(DOWN_CHARACTER) && canCellMoveDown(new RowColumnPair(r, c)))
-                    || (direction.equals(LEFT_CHARACTER) && canCellMoveLeft(new RowColumnPair(r, c)))
-                    || (direction.equals(RIGHT_CHARACTER) && canCellMoveRight(new RowColumnPair(r, c)))))
-                        return true;
+        for (int r = 0; r < num_rows; r++) {
+            for (int c = 0; c < num_cols; c++) {
+                if (!board[r][c].isEmpty()
+                        && ((direction.equals(UP_CHARACTER)
+                                        && canCellMoveUp(new RowColumnPair(r, c)))
+                                || (direction.equals(DOWN_CHARACTER)
+                                        && canCellMoveDown(new RowColumnPair(r, c)))
+                                || (direction.equals(LEFT_CHARACTER)
+                                        && canCellMoveLeft(new RowColumnPair(r, c)))
+                                || (direction.equals(RIGHT_CHARACTER)
+                                        && canCellMoveRight(new RowColumnPair(r, c))))) return true;
             }
         }
         return false;
@@ -100,12 +101,11 @@ public class Board {
     private boolean canCellMoveUp(RowColumnPair cell) {
         int col = cell.getCol();
         int row = cell.getRow();
-        if(row != 0 && board[row][col].getValue() == board[row - 1][col].getValue()) {
+        if (row != 0 && board[row][col].getValue() == board[row - 1][col].getValue()) {
             return true;
         }
-        for(int r = row - 1; r >= 0; r--) {
-            if(board[r][col].isEmpty())
-                return true;
+        for (int r = row - 1; r >= 0; r--) {
+            if (board[r][col].isEmpty()) return true;
         }
         return false;
     }
@@ -113,12 +113,11 @@ public class Board {
     private boolean canCellMoveDown(RowColumnPair cell) {
         int col = cell.getCol();
         int row = cell.getRow();
-        if(row != num_rows - 1 && board[row][col].getValue() == board[row + 1][col].getValue()) {
+        if (row != num_rows - 1 && board[row][col].getValue() == board[row + 1][col].getValue()) {
             return true;
         }
-        for(int r = row + 1; r < num_rows; r++) {
-            if(board[r][col].isEmpty())
-                return true;
+        for (int r = row + 1; r < num_rows; r++) {
+            if (board[r][col].isEmpty()) return true;
         }
         return false;
     }
@@ -126,12 +125,11 @@ public class Board {
     private boolean canCellMoveLeft(RowColumnPair cell) {
         int col = cell.getCol();
         int row = cell.getRow();
-        if(col != 0 && board[row][col].getValue() == board[row][col - 1].getValue()) {
+        if (col != 0 && board[row][col].getValue() == board[row][col - 1].getValue()) {
             return true;
         }
-        for(int c = col - 1; c >= 0; c--) {
-            if(board[row][c].isEmpty())
-                return true;
+        for (int c = col - 1; c >= 0; c--) {
+            if (board[row][c].isEmpty()) return true;
         }
         return false;
     }
@@ -139,12 +137,11 @@ public class Board {
     private boolean canCellMoveRight(RowColumnPair cell) {
         int col = cell.getCol();
         int row = cell.getRow();
-        if(col != num_cols - 1 && board[row][col].getValue() == board[row][col + 1].getValue()) {
+        if (col != num_cols - 1 && board[row][col].getValue() == board[row][col + 1].getValue()) {
             return true;
         }
-        for(int c = col + 1; c < num_cols; c++) {
-            if(board[row][c].isEmpty())
-                return true;
+        for (int c = col + 1; c < num_cols; c++) {
+            if (board[row][c].isEmpty()) return true;
         }
         return false;
     }
@@ -152,9 +149,10 @@ public class Board {
     private int moveUp() {
         int score = 0;
         shiftCellsUp();
-        for(int c = 0; c < num_cols; c++) {
-            for(int r = 0; r < num_rows - 1; r++) {
-                if(!board[r][c].isEmpty() && board[r][c].getValue() == board[r + 1][c].getValue()) {
+        for (int c = 0; c < num_cols; c++) {
+            for (int r = 0; r < num_rows - 1; r++) {
+                if (!board[r][c].isEmpty()
+                        && board[r][c].getValue() == board[r + 1][c].getValue()) {
                     board[r][c].doubleValue();
                     board[r + 1][c].emptyCell();
                     score += board[r][c].getValue();
@@ -166,12 +164,12 @@ public class Board {
     }
 
     private void shiftCellsUp() {
-        for(int c = 0; c < num_cols; c++) {
+        for (int c = 0; c < num_cols; c++) {
             for (int r = 0; r < num_rows; r++) {
-                if(!board[r][c].isEmpty()) {
+                if (!board[r][c].isEmpty()) {
                     int value = board[r][c].getValue();
                     int row = r - 1;
-                    while(row >= 0 && board[row][c].isEmpty()) {
+                    while (row >= 0 && board[row][c].isEmpty()) {
                         board[row][c].setValue(value);
                         board[row + 1][c].emptyCell();
                         row--;
@@ -184,9 +182,10 @@ public class Board {
     private int moveDown() {
         int score = 0;
         shiftCellsDown();
-        for(int c = 0; c < num_cols; c++) {
-            for(int r = num_rows - 1; r > 0; r--) {
-                if(!board[r][c].isEmpty() && board[r][c].getValue() == board[r - 1][c].getValue()) {
+        for (int c = 0; c < num_cols; c++) {
+            for (int r = num_rows - 1; r > 0; r--) {
+                if (!board[r][c].isEmpty()
+                        && board[r][c].getValue() == board[r - 1][c].getValue()) {
                     board[r][c].doubleValue();
                     board[r - 1][c].emptyCell();
                     score += board[r][c].getValue();
@@ -198,12 +197,12 @@ public class Board {
     }
 
     private void shiftCellsDown() {
-        for(int c = 0; c < num_cols; c++) {
+        for (int c = 0; c < num_cols; c++) {
             for (int r = num_rows - 1; r >= 0; r--) {
-                if(!board[r][c].isEmpty()) {
+                if (!board[r][c].isEmpty()) {
                     int value = board[r][c].getValue();
                     int row = r + 1;
-                    while(row <= num_rows - 1 && board[row][c].isEmpty()) {
+                    while (row <= num_rows - 1 && board[row][c].isEmpty()) {
                         board[row][c].setValue(value);
                         board[row - 1][c].emptyCell();
                         row++;
@@ -216,9 +215,10 @@ public class Board {
     private int moveLeft() {
         int score = 0;
         shiftCellsLeft();
-        for(int r = 0; r < num_rows; r++) {
-            for(int c = 0; c < num_cols - 1; c++) {
-                if(!board[r][c].isEmpty() && board[r][c].getValue() == board[r][c + 1].getValue()) {
+        for (int r = 0; r < num_rows; r++) {
+            for (int c = 0; c < num_cols - 1; c++) {
+                if (!board[r][c].isEmpty()
+                        && board[r][c].getValue() == board[r][c + 1].getValue()) {
                     board[r][c].doubleValue();
                     board[r][c + 1].emptyCell();
                     score += board[r][c].getValue();
@@ -230,12 +230,12 @@ public class Board {
     }
 
     private void shiftCellsLeft() {
-        for(int r = 0; r < num_rows; r++) {
+        for (int r = 0; r < num_rows; r++) {
             for (int c = 0; c < num_cols; c++) {
-                if(!board[r][c].isEmpty()) {
+                if (!board[r][c].isEmpty()) {
                     int value = board[r][c].getValue();
                     int col = c - 1;
-                    while(col >= 0 && board[r][col].isEmpty()) {
+                    while (col >= 0 && board[r][col].isEmpty()) {
                         board[r][col].setValue(value);
                         board[r][col + 1].emptyCell();
                         col--;
@@ -248,9 +248,10 @@ public class Board {
     private int moveRight() {
         int score = 0;
         shiftCellsRight();
-        for(int r = 0; r < num_rows; r++) {
-            for(int c = num_cols - 1; c > 0; c--) {
-                if(!board[r][c].isEmpty() && board[r][c].getValue() == board[r][c - 1].getValue()) {
+        for (int r = 0; r < num_rows; r++) {
+            for (int c = num_cols - 1; c > 0; c--) {
+                if (!board[r][c].isEmpty()
+                        && board[r][c].getValue() == board[r][c - 1].getValue()) {
                     board[r][c].doubleValue();
                     board[r][c - 1].emptyCell();
                     score += board[r][c].getValue();
@@ -262,12 +263,12 @@ public class Board {
     }
 
     private void shiftCellsRight() {
-        for(int r = 0; r < num_rows; r++) {
+        for (int r = 0; r < num_rows; r++) {
             for (int c = num_cols - 1; c >= 0; c--) {
-                if(!board[r][c].isEmpty()) {
+                if (!board[r][c].isEmpty()) {
                     int value = board[r][c].getValue();
                     int col = c + 1;
-                    while(col <= num_cols - 1 && board[r][col].isEmpty()) {
+                    while (col <= num_cols - 1 && board[r][col].isEmpty()) {
                         board[r][col].setValue(value);
                         board[r][col - 1].emptyCell();
                         col++;
@@ -278,8 +279,7 @@ public class Board {
     }
 
     public int getCellValue(int row, int col) {
-        if(row < 0 || row >= num_rows || col < 0 || col >= num_cols)
-            return -1;
+        if (row < 0 || row >= num_rows || col < 0 || col >= num_cols) return -1;
         return board[row][col].getValue();
     }
 
@@ -294,13 +294,29 @@ public class Board {
     public void print() {
         int character_width_of_board = (num_cols * 6) + 1;
         System.out.println("-".repeat(character_width_of_board));
-        for(int r = 0; r < num_rows; r++) {
+        for (int r = 0; r < num_rows; r++) {
             System.out.print("|");
-            for(int c = 0; c < num_cols; c++) {
+            for (int c = 0; c < num_cols; c++) {
                 System.out.printf("%5s|", board[r][c].getPrintValue());
             }
             System.out.println();
             System.out.println("-".repeat(character_width_of_board));
         }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder("[");
+        for (int r = 0; r < num_rows; r++) {
+            result.append("[");
+            for (int c = 0; c < num_cols; c++) {
+                result.append(board[r][c].getValue());
+                if (c != num_cols - 1) result.append(",");
+            }
+            result.append("]");
+            if (r != num_rows - 1) result.append(",");
+        }
+        result.append("]");
+        return result.toString();
     }
 }

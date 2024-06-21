@@ -64,6 +64,7 @@ public class GameWindow extends JFrame {
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.add(start_page);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setVisible(true);
     }
 
