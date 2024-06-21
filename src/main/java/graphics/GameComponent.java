@@ -15,6 +15,7 @@ public class GameComponent extends JPanel implements KeyListener {
     private Board board;
     private int score;
     private boolean is_game_over;
+    private BoardComponent boardComponent;
 
     public GameComponent(int num_rows, int num_cols) {
         this.num_rows = num_rows;
@@ -24,6 +25,7 @@ public class GameComponent extends JPanel implements KeyListener {
         board.addRandomValue();
         score = 0;
         is_game_over = false;
+        boardComponent = new BoardComponent(board);
     }
 
     @Override
@@ -35,28 +37,12 @@ public class GameComponent extends JPanel implements KeyListener {
         g.setFont(new Font("Arial", Font.BOLD, 40));
         g.drawString(String.valueOf(score), 390 - ((String.valueOf(score).length() - 1) * 10), 75);
 
-        int larger_dimension = Math.max(num_rows, num_cols);
-        int cell_size = (WINDOW_SIZE - (SPACE_BETWEEN_CELLS * larger_dimension - 1) - (MARGIN_SIZE * 2 + (larger_dimension * 10))) / Math.max(num_rows, num_cols);
-
-        g.setFont(new Font("Arial", Font.BOLD, 30));
-        for(int r = 0; r < num_rows; r++) {
-            for(int c = 0; c < num_cols; c++) {
-                int x_coordinate = (MARGIN_SIZE + (num_cols * (num_cols) - 2)) + (c * (cell_size + SPACE_BETWEEN_CELLS));
-                int y_coordinate = (MARGIN_SIZE + (num_rows * (num_rows) - 2)) + (r * (cell_size + SPACE_BETWEEN_CELLS));
-                g.setColor(Color.GRAY);
-                g.fillRoundRect(x_coordinate, y_coordinate, cell_size, cell_size, 15, 15);
-                g.setColor(Color.BLACK);
-                int value = board.getCellValue(r, c);
-                if(value != EMPTY_CELL_VALUE)
-                    g.drawString(String.valueOf(value),x_coordinate + cell_size / 2, y_coordinate + cell_size / 2);
-
-            }
-        }
+        boardComponent.paintBoard(g);
 
         if(is_game_over) {
             g.setColor(Color.RED);
             g.setFont(new Font("Arial", Font.BOLD, 60));
-            g.drawString("GAME OVER", 200, 725);
+            g.drawString("GAME OVER", 210, 750);
         }
     }
 
@@ -106,6 +92,7 @@ public class GameComponent extends JPanel implements KeyListener {
             board.addRandomValue();
             is_game_over = false;
             score = 0;
+            boardComponent = new BoardComponent(board);
             repaint();
         }
     }

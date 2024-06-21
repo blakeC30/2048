@@ -283,6 +283,14 @@ public class Board {
         return board[row][col].getValue();
     }
 
+    public int getNumRows() {
+        return num_rows;
+    }
+
+    public int getNumCols() {
+        return num_cols;
+    }
+
     public void print() {
         int character_width_of_board = (num_cols * 6) + 1;
         System.out.println("-".repeat(character_width_of_board));
