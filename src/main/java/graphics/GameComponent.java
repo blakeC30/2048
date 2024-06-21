@@ -15,7 +15,7 @@ public class GameComponent extends JPanel implements KeyListener {
     private Board board;
     private int score;
     private boolean is_game_over;
-    private BoardComponent boardComponent;
+    private BoardComponent board_component;
 
     public GameComponent(int num_rows, int num_cols) {
         this.num_rows = num_rows;
@@ -25,7 +25,7 @@ public class GameComponent extends JPanel implements KeyListener {
         board.addRandomValue();
         score = 0;
         is_game_over = false;
-        boardComponent = new BoardComponent(board);
+        board_component = new BoardComponent(board);
     }
 
     @Override
@@ -37,7 +37,7 @@ public class GameComponent extends JPanel implements KeyListener {
         g.setFont(new Font("Arial", Font.BOLD, 40));
         g.drawString(String.valueOf(score), 390 - ((String.valueOf(score).length() - 1) * 10), 75);
 
-        boardComponent.paintBoard(g);
+        board_component.paintBoard(g);
 
         if(is_game_over) {
             g.setColor(Color.RED);
@@ -92,7 +92,7 @@ public class GameComponent extends JPanel implements KeyListener {
             board.addRandomValue();
             is_game_over = false;
             score = 0;
-            boardComponent = new BoardComponent(board);
+            board_component = new BoardComponent(board);
             repaint();
         }
     }
