@@ -44,4 +44,10 @@ public class Constants {
                     Map.entry(131072, new Color(43, 98, 165)));
     public static final int AI_GAME_SIZE = 4;
     public static final Set<String> AI_MOVES = Set.of("UP", "DOWN", "LEFT", "RIGHT");
+    public static final double INITIAL_Q_VALUE = 0.0;
+    public static final double LEARNING_RATE = 0.5;
+    public static final int TRAIN_NUM_GAMES = 2500;
+    public static final double DISCOUNT_FACTOR = 0.2;
+    public static final double INVALID_MOVE_REWARD = -5.0;
+    public static final double ONE_EMPTY_REWARD = -50.0;
 }

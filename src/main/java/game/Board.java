@@ -4,6 +4,7 @@ import static constant.Constants.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import util.Move;
 import util.RowColumnPair;
 
 public class Board {
@@ -15,6 +16,16 @@ public class Board {
         this.num_rows = num_rows;
         this.num_cols = num_cols;
         populateBoard();
+    }
+
+    public Board(int num_rows, int num_cols, Cell[][] board) {
+        this.num_rows = num_rows;
+        this.num_cols = num_cols;
+        this.board = board.clone();
+    }
+
+    public Board cloneBoard() {
+        return new Board(num_rows, num_cols, board);
     }
 
     private void populateBoard() {
@@ -33,7 +44,7 @@ public class Board {
         board[selected.getRow()][selected.getCol()].setValue(value);
     }
 
-    private List<RowColumnPair> getEmptyCells() {
+    public List<RowColumnPair> getEmptyCells() {
         List<RowColumnPair> emptyCells = new ArrayList<>();
         for (int r = 0; r < num_rows; r++) {
             for (int c = 0; c < num_cols; c++) {
@@ -81,6 +92,24 @@ public class Board {
         return 0;
     }
 
+    public int move(Move direction) {
+        switch (direction) {
+            case Move.UP -> {
+                return moveUp();
+            }
+            case Move.DOWN -> {
+                return moveDown();
+            }
+            case Move.LEFT -> {
+                return moveLeft();
+            }
+            case Move.RIGHT -> {
+                return moveRight();
+            }
+        }
+        return 0;
+    }
+
     public boolean isValidMove(String direction) {
         for (int r = 0; r < num_rows; r++) {
             for (int c = 0; c < num_cols; c++) {
@@ -92,6 +121,22 @@ public class Board {
                                 || (direction.equals(LEFT_CHARACTER)
                                         && canCellMoveLeft(new RowColumnPair(r, c)))
                                 || (direction.equals(RIGHT_CHARACTER)
+                                        && canCellMoveRight(new RowColumnPair(r, c))))) return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isValidMove(Move direction) {
+        for (int r = 0; r < num_rows; r++) {
+            for (int c = 0; c < num_cols; c++) {
+                if (!board[r][c].isEmpty()
+                        && ((direction == Move.UP && canCellMoveUp(new RowColumnPair(r, c)))
+                                || (direction == Move.DOWN
+                                        && canCellMoveDown(new RowColumnPair(r, c)))
+                                || (direction == Move.LEFT
+                                        && canCellMoveLeft(new RowColumnPair(r, c)))
+                                || (direction == Move.RIGHT
                                         && canCellMoveRight(new RowColumnPair(r, c))))) return true;
             }
         }
